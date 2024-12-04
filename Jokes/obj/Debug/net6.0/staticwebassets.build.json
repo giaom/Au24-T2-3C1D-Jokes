@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "g08MczrwGtpxIDF7dT8th3eiy+sS78kWxMsY74SpvMo=",
+  "Hash": "/D58xgVjLFuhk3IOlPNTCidEoSVw0fASI1mQPlEryQM=",
   "Source": "Jokes",
   "BasePath": "_content/Jokes",
   "Mode": "Default",
@@ -17,10 +17,10 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Jokes.styles.css",
+      "Identity": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Jokes.styles.css",
       "SourceId": "Jokes",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Jokes",
       "RelativePath": "Jokes.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Jokes.styles.css"
+      "OriginalItemSpec": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Jokes.styles.css"
     },
     {
-      "Identity": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Jokes.bundle.scp.css",
+      "Identity": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Jokes.bundle.scp.css",
       "SourceId": "Jokes",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Jokes",
       "RelativePath": "Jokes.bundle.scp.css",
       "AssetKind": "All",
@@ -52,7 +52,7 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Jokes.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Jokes.bundle.scp.css"
     },
     {
       "Identity": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\wwwroot\\css\\site.css",
