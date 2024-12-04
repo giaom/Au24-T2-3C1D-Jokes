@@ -3,7 +3,7 @@ using System;
 using System.Text.Json.Serialization;
 
 
-namespace Quotes
+namespace Jokes
 {
     public class Joke
     {

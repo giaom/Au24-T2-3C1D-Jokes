@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Quotes
+namespace Jokes
 {
     public sealed class JokesLibrary
     {
