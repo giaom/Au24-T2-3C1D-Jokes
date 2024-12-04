@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Jokes.Controllers
+namespace JokesStorage.Controllers
 {
     [ApiController]
     [Route("[controller]")]
