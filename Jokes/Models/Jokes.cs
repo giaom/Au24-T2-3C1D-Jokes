@@ -3,7 +3,7 @@ using System;
 using System.Text.Json.Serialization;
 
 
-namespace Jokes
+namespace JokesStorage
 {
     public class Joke
     {
