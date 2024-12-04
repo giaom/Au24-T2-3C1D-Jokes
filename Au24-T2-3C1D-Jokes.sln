@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jokes", "Jokes", "{F85E7691-5193-4021-84EB-130403AE891E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jokes", "Jokes\Jokes\Jokes.csproj", "{2D99F4F7-19C2-45E2-AB6E-E776070B5260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jokes", "\Jokes.csproj", "{2D99F4F7-19C2-45E2-AB6E-E776070B5260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
