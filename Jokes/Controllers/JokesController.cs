@@ -1,19 +1,20 @@
 // JokerController.cs
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using Jokes.Models;
 
 
 namespace JokesStorage.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class JokesController : ControllerBase
+    public class JokesController : Controller
     {
         private readonly ILogger<JokesController> _logger;
         private readonly JokesLibrary library;
-
 
         public JokesController(ILogger<JokesController> logger)
         {
@@ -21,6 +22,18 @@ namespace JokesStorage.Controllers
             library = JokesLibrary.Instance;
         }
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return (!library.GetAll().Any()) ?
+            NotFound("No jokes currently stored") : View(library.GetAll());
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
         [HttpPost]
         public IActionResult Post([FromBody] Joke joke)
@@ -28,16 +41,19 @@ namespace JokesStorage.Controllers
             joke.Id = Guid.NewGuid();
             joke.CreatedDate = DateTime.Now;
             library.AddJoke(joke);
-            return CreatedAtAction(nameof(Get), new { id = joke.Id }, joke);
+            return Created("", joke);
         }
 
-
-        [HttpGet]
+        [HttpGet("random")]
         public IActionResult Get()
         {
-            return Ok(library.GetAll());
-        }
+            Random rand = new Random();
 
+            int randIndex = rand.Next();
+
+            Joke result = library.GetByIndex(randIndex);
+            return (result == null) ? NotFound("No jokes currently stored") : Ok(result);
+        }
 
         [HttpGet("id/{id:guid}")]
         public IActionResult Get(Guid id)
