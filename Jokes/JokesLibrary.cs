@@ -38,18 +38,32 @@ namespace JokesStorage
             internal static readonly JokesLibrary instance = new JokesLibrary();
         }
 
-
+        /// <summary>
+        /// retrieves a joke stored with a Id value equal to the input Guid id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Joke GetByID(Guid id)
         {
             return jokes.FirstOrDefault(joke => joke.Id == id);
         }
 
+        /// <summary>
+        /// retrieves a list of jokes stored with an Author value equal to the input string author
+        /// case insensitively
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
+        public List<Joke> GetByAuthor(string author)
+        {
+            List<Joke> jokesOfAuthor = jokes.FindAll(joke => joke.Author.ToLower() == author.ToLower());
+            return jokesOfAuthor;
+        }
 
         public List<Joke> GetAll()
         {
             return jokes;
         }
-
 
         public void AddJoke(Joke joke)
         {

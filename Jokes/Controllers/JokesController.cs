@@ -39,11 +39,21 @@ namespace JokesStorage.Controllers
         }
 
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("id/{id:guid}")]
         public IActionResult Get(Guid id)
         {
             Joke result = library.GetByID(id);
-            return (result == null) ? NotFound(id) : Ok(result);
+            return (result == null) ? NotFound("No jokes with ID: " + "\"" + id + "\"") : Ok(result);
+        }
+
+        [HttpGet("author/{author}")]
+        public IActionResult Get(string author)
+        {
+            // Query the database for jokes by the given author, case insensitively
+            List<Joke> result = library.GetByAuthor(author);
+
+            // If no jokes are found, return 404, else return list of jokes          
+            return (!result.Any()) ? NotFound("No jokes with Author: " + "\"" + author + "\"") : Ok(result);
         }
     }
 }
