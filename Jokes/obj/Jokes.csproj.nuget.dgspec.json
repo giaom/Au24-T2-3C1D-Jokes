@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\Jokes.csproj": {}
+    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\Jokes.csproj": {
+    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\Jokes.csproj",
+        "projectUniqueName": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
         "projectName": "Jokes",
-        "projectPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\Jokes.csproj",
+        "projectPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
         "packagesPath": "C:\\Users\\xolee\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes-1\\Jokes\\obj\\",
+        "outputPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\xolee\\AppData\\Roaming\\NuGet\\NuGet.Config"

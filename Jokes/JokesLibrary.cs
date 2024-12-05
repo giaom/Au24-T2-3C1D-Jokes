@@ -22,8 +22,15 @@ namespace JokesStorage
                     Text = "Why don't scientists trust atoms? Because they make up everything!",
                     Author = "Unknown",
                     CreatedDate = DateTime.Now
-                }
+                },
                 // Add more jokes here if needed
+                 new Joke
+                {
+                    Id = Guid.NewGuid(),
+                    Text = "1",
+                    Author = "2",
+                    CreatedDate = DateTime.Now
+                }
             };
         }
 
