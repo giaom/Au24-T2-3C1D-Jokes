@@ -10,33 +10,30 @@ namespace JokesStorage
     {
         public List<Joke> jokes;
 
-
         // Singleton: No public constructor
         private JokesLibrary()
         {
             jokes = new List<Joke>
             {
-                new Joke
-                {
-                    Id = Guid.NewGuid(),
-                    Text = "Why don't scientists trust atoms? Because they make up everything!",
-                    Author = "Unknown",
-                    CreatedDate = DateTime.Now
-                },
-                // Add more jokes here if needed
-                 new Joke
-                {
-                    Id = Guid.NewGuid(),
-                    Text = "1",
-                    Author = "2",
-                    CreatedDate = DateTime.Now
-                }
+                    new Joke
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "Why don't scientists trust atoms? Because they make up everything!",
+                        Author = "Unknown",
+                        CreatedDate = DateTime.Now
+                    }
+                    // Add more jokes here if needed
+                    , new Joke
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "1",
+                        Author = "2",
+                        CreatedDate = DateTime.Now
+                    }
             };
         }
 
-
         public static JokesLibrary Instance { get { return NestedJokesLibrary.instance; } }
-
 
         // Nested class for lazy load singleton pattern
         private class NestedJokesLibrary
@@ -53,6 +50,24 @@ namespace JokesStorage
         public Joke GetByID(Guid id)
         {
             return jokes.FirstOrDefault(joke => joke.Id == id);
+        }
+
+        /// <summary>
+        /// retrieves a joke stored at the input int index in the List<Joke>
+        /// if the index is larger than the number of stored jokes, index will be assigned
+        /// index % jokes.Count, ensuring only indicies within range are accessed
+        /// if there are no jokes stored, returns null
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Joke GetByIndex(int index)
+        {
+            if (jokes.Count == 0)
+                return null;
+
+            index = index % jokes.Count;
+            Joke joke = jokes[index];
+            return joke;
         }
 
         /// <summary>

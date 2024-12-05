@@ -25,7 +25,8 @@ namespace JokesStorage.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(library.GetAll());
+            return (!library.GetAll().Any()) ?
+            NotFound("No jokes currently stored") : View(library.GetAll());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -41,6 +42,17 @@ namespace JokesStorage.Controllers
             joke.CreatedDate = DateTime.Now;
             library.AddJoke(joke);
             return Created("", joke);
+        }
+
+        [HttpGet("random")]
+        public IActionResult Get()
+        {
+            Random rand = new Random();
+
+            int randIndex = rand.Next();
+
+            Joke result = library.GetByIndex(randIndex);
+            return (result == null) ? NotFound("No jokes currently stored") : Ok(result);
         }
 
         [HttpGet("id/{id:guid}")]
