@@ -3,12 +3,13 @@ using Quotes;
 using System;
 using System.Linq;
 using Quotes.Data;
+using Jokes.Models;
 
 namespace Quotes.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JokesController : ControllerBase
+    public class JokesController : Controller
     {
         private readonly AppDbContext _context;
 
@@ -17,13 +18,22 @@ namespace Quotes.Controllers
             _context = context;
         }
 
-
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Index()
         {
+            // Return all the jokes in Jokes table 
             var jokes = _context.Jokes.ToList();
-            return Ok(jokes);
+            return View(jokes);
         }
+
+
+        // [HttpGet]
+        // public IActionResult Get()
+        // {
+        //     // Return all the jokes in Jokes table 
+        //     var jokes = _context.Jokes.ToList();
+        //     return Ok(jokes);
+        // }
 
         [HttpGet("{id:guid}")]
         public IActionResult Get(Guid id)
@@ -40,19 +50,65 @@ namespace Quotes.Controllers
                 return BadRequest("Joke is required.");
             }
 
+            //deifne joke object 
             joke.Id = Guid.NewGuid();
             joke.CreatedDate = DateTime.Now;
+
+            // Add joke object 
             _context.Jokes.Add(joke);
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(Get), new { id = joke.Id }, joke);
         }
 
-        // get quote based author endpoint 
+        [HttpDelete("remove/{id:guid}")]
+        public IActionResult DeleteJoke(Guid id)
+        {
+            // Try to find the joke
+            var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
+
+            // Check if joke is null
+            if (joke == null)
+            {
+                return NotFound($"No joke found with ID: {id}");
+            }
+
+            // Remove the joke (now safely, because we know it's not null)
+            _context.Jokes.Remove(joke);
+            _context.SaveChanges();
+
+            return Ok($"Joke with ID {id} has been removed successfully.");
+        }
+
+        [HttpGet("random")]
+        public IActionResult RandomJoke()
+        {
+            // Get the total count of jokes in the database
+            var jokeCount = _context.Jokes.Count();
+
+            if (jokeCount == 0)
+            {
+                return NotFound("No jokes available.");
+            }
+
+            // Create a random object
+            Random random = new Random();
+
+            // Generate a random index between 0 and jokeCount - 1
+            int randomIndex = random.Next(0, jokeCount);
+
+            // Get the random joke
+            var randomJoke = _context.Jokes.Skip(randomIndex).Take(1).FirstOrDefault();
+
+            if (randomJoke == null)
+            {
+                return NotFound("Joke not found.");
+            }
+
+            // Return the random joke
+            return Ok(randomJoke);
+        }
 
 
-        // Delete author based on id endpoint 
-
-        // update quote text endpoint 
     }
 }
