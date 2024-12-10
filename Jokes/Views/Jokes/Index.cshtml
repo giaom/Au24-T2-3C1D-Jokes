@@ -7,16 +7,20 @@
 
 <div class="text-center">
     <h1 class="display-4">Jokes Page</h1>
+    <br /> <!-- Extra line of blank space -->
 
     <div class="joke-list">
         @foreach (var joke in Model)
         {
             <div class="joke">
-                <p>"@joke.Text"
-                    <br>Author: @joke.Author
-                    <br>ID: @joke.Id
-                    <br>Created: @joke.CreatedDate
+                <br />
+                <p><strong>"@joke.Text"</strong>
+                    <br><strong>Author:</strong> @joke.Author
+                    <br><strong>ID:</strong> @joke.Id
+                    <br><strong>Created:</strong> @joke.CreatedDate
                 </p>
+                <br />
+                <hr />
             </div>
         }
     </div>

@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {}
+    "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {
+    "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
+        "projectUniqueName": "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
         "projectName": "Jokes",
-        "projectPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
-        "packagesPath": "C:\\Users\\xolee\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\obj\\",
+        "projectPath": "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
+        "packagesPath": "C:\\Users\\Aisha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\xolee\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Aisha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

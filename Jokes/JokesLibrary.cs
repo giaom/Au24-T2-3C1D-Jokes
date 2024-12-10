@@ -15,19 +15,22 @@ namespace JokesStorage
         {
             jokes = new List<Joke>
             {
-                    new Joke
-                    {
+                    new Joke{
                         Id = Guid.NewGuid(),
-                        Text = "Why don't scientists trust atoms? Because they make up everything!",
-                        Author = "Unknown",
+                        Text = "dotnet run addjoke \"Joke text here\" \"Author name here\"", // dotnet run addjoke "Joke text here" "Author name here"
+                        Author = "(^ Instructions on adding Joke through terminal)",
                         CreatedDate = DateTime.Now
-                    }
-                    // Add more jokes here if needed
-                    , new Joke
-                    {
+                    },
+                    new Joke {
                         Id = Guid.NewGuid(),
-                        Text = "1",
-                        Author = "2",
+                        Text = "Hardcoded Joke",
+                        Author = "In JokesLibrary.cs",
+                        CreatedDate = DateTime.Now
+                    },
+                    new Joke {
+                        Id = Guid.NewGuid(),
+                        Text = null,
+                        Author = null,
                         CreatedDate = DateTime.Now
                     }
             };

@@ -122,3 +122,34 @@ C:\Users\xolee\projects\css390\Au24-T2-3C1D-Jokes-1\Jokes\obj\Debug\net8.0\refin
 C:\Users\xolee\projects\css390\Au24-T2-3C1D-Jokes-1\Jokes\obj\Debug\net8.0\Jokes.pdb
 C:\Users\xolee\projects\css390\Au24-T2-3C1D-Jokes-1\Jokes\obj\Debug\net8.0\Jokes.genruntimeconfig.cache
 C:\Users\xolee\projects\css390\Au24-T2-3C1D-Jokes-1\Jokes\obj\Debug\net8.0\ref\Jokes.dll
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\appsettings.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\Jokes.staticwebassets.runtime.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\Jokes.exe
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\Jokes.deps.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\Jokes.runtimeconfig.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\Jokes.dll
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\bin\Debug\net8.0\Jokes.pdb
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.AssemblyInfoInputs.cache
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.AssemblyInfo.cs
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.csproj.CoreCompileInputs.cache
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.RazorAssemblyInfo.cache
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.RazorAssemblyInfo.cs
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.sourcelink.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets\msbuild.Jokes.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets\msbuild.build.Jokes.props
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Jokes.props
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Jokes.props
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\scopedcss\bundle\Jokes.styles.css
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\scopedcss\projectbundle\Jokes.bundle.scp.css
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.dll
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\refint\Jokes.dll
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.pdb
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\Jokes.genruntimeconfig.cache
+C:\Users\Aisha\UWBclas\UWB24Aut\390 SpecialTopics\JokesFold\Au24-T2-3C1D-Jokes\Jokes\obj\Debug\net8.0\ref\Jokes.dll
