@@ -1,8 +1,61 @@
-﻿@{
+﻿@model JokesStorage.Joke
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to the Home Page!</h1>
-    <p>Select an option on the top left</a>.</p>
+    <p>Select an option on the top left</p>
+
+    <div id="joke-container">
+        @if (Model != null)
+        {
+            <div class="joke">
+                <br />
+                <br />
+                <br />
+                <p><strong>"@Model.Text"</strong>
+                    <br><strong>Author:</strong> @Model.Author
+                    <!-- <br><strong>ID:</strong> @Model.Id -->
+                    <!-- <br><strong>Created:</strong> @Model.CreatedDate -->
+                </p>
+                <br />
+            </div>
+        }
+        else
+        {
+            <p>No jokes available.</p>
+        }
+    </div>
+
+    <button id="random-joke-button" class="btn btn-primary">Pull random joke</button>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("random-joke-button").addEventListener("click", function () {
+            fetch('/Home/GetRandomJoke')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const jokeContainer = document.getElementById("joke-container");
+                        jokeContainer.innerHTML = `
+                            <div class="joke">
+                                <br />
+                                <br />
+                                <p><strong>"${data.joke.text}"</strong>
+                                    <br><strong>Author:</strong> ${data.joke.author}
+                                    <!-- <br><strong>ID:</strong> ${data.joke.id} -->
+                                    <!-- <br><strong>Created:</strong> ${data.joke.createdDate} -->
+                                </p>
+                                <br />
+                            </div>
+                        `;
+                    } else {
+                        alert(data.message);
+                    }
+                });
+        });
+    </script>
+}
