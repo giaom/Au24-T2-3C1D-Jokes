@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {}
+    "/Users/rohanpatel/Documents/Au24-T2-3C1D-Jokes/Jokes/Jokes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj": {
+    "/Users/rohanpatel/Documents/Au24-T2-3C1D-Jokes/Jokes/Jokes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
+        "projectUniqueName": "/Users/rohanpatel/Documents/Au24-T2-3C1D-Jokes/Jokes/Jokes.csproj",
         "projectName": "Jokes",
-        "projectPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\Jokes.csproj",
-        "packagesPath": "C:\\Users\\xolee\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\xolee\\projects\\css390\\Au24-T2-3C1D-Jokes\\Jokes\\obj\\",
+        "projectPath": "/Users/rohanpatel/Documents/Au24-T2-3C1D-Jokes/Jokes/Jokes.csproj",
+        "packagesPath": "/Users/rohanpatel/.nuget/packages/",
+        "outputPath": "/Users/rohanpatel/Documents/Au24-T2-3C1D-Jokes/Jokes/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\xolee\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/rohanpatel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -42,6 +42,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

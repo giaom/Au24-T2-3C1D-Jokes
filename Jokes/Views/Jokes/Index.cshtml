@@ -3,11 +3,10 @@
     Layout = "_Layout";
 }
 <h1>@ViewData["Title"]</h1>
-@model IEnumerable<JokesStorage.Joke>
+@model IEnumerable<Quotes.Joke>
 
 <div class="text-center">
     <h1 class="display-4">Jokes Page</h1>
-
     <div class="joke-list">
         @foreach (var joke in Model)
         {

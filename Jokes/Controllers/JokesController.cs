@@ -1,75 +1,114 @@
-// JokerController.cs
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Quotes;
 using System;
-using System.Collections.Generic;
+using System.Linq;
+using Quotes.Data;
 using Jokes.Models;
 
-
-namespace JokesStorage.Controllers
+namespace Quotes.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class JokesController : Controller
     {
-        private readonly ILogger<JokesController> _logger;
-        private readonly JokesLibrary library;
+        private readonly AppDbContext _context;
 
-        public JokesController(ILogger<JokesController> logger)
+        public JokesController(AppDbContext context)
         {
-            _logger = logger;
-            library = JokesLibrary.Instance;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            return (!library.GetAll().Any()) ?
-            NotFound("No jokes currently stored") : View(library.GetAll());
+            // Return all the jokes in Jokes table 
+            var jokes = _context.Jokes.ToList();
+            return View(jokes);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+        // [HttpGet]
+        // public IActionResult Get()
+        // {
+        //     // Return all the jokes in Jokes table 
+        //     var jokes = _context.Jokes.ToList();
+        //     return Ok(jokes);
+        // }
+
+        [HttpGet("{id:guid}")]
+        public IActionResult Get(Guid id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
+            return joke == null ? NotFound() : Ok(joke);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] Joke joke)
         {
+            if (joke == null)
+            {
+                return BadRequest("Joke is required.");
+            }
+
+            //deifne joke object 
             joke.Id = Guid.NewGuid();
             joke.CreatedDate = DateTime.Now;
-            library.AddJoke(joke);
-            return Created("", joke);
+
+            // Add joke object 
+            _context.Jokes.Add(joke);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(Get), new { id = joke.Id }, joke);
+        }
+
+        [HttpDelete("remove/{id:guid}")]
+        public IActionResult DeleteJoke(Guid id)
+        {
+            // Try to find the joke
+            var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
+
+            // Check if joke is null
+            if (joke == null)
+            {
+                return NotFound($"No joke found with ID: {id}");
+            }
+
+            // Remove the joke (now safely, because we know it's not null)
+            _context.Jokes.Remove(joke);
+            _context.SaveChanges();
+
+            return Ok($"Joke with ID {id} has been removed successfully.");
         }
 
         [HttpGet("random")]
-        public IActionResult Get()
+        public IActionResult RandomJoke()
         {
-            Random rand = new Random();
+            // Get the total count of jokes in the database
+            var jokeCount = _context.Jokes.Count();
 
-            int randIndex = rand.Next();
+            if (jokeCount == 0)
+            {
+                return NotFound("No jokes available.");
+            }
 
-            Joke result = library.GetByIndex(randIndex);
-            return (result == null) ? NotFound("No jokes currently stored") : Ok(result);
+            // Create a random object
+            Random random = new Random();
+
+            // Generate a random index between 0 and jokeCount - 1
+            int randomIndex = random.Next(0, jokeCount);
+
+            // Get the random joke
+            var randomJoke = _context.Jokes.Skip(randomIndex).Take(1).FirstOrDefault();
+
+            if (randomJoke == null)
+            {
+                return NotFound("Joke not found.");
+            }
+
+            // Return the random joke
+            return Ok(randomJoke);
         }
 
-        [HttpGet("id/{id:guid}")]
-        public IActionResult Get(Guid id)
-        {
-            Joke result = library.GetByID(id);
-            return (result == null) ? NotFound("No jokes with ID: " + "\"" + id + "\"") : Ok(result);
-        }
 
-        [HttpGet("author/{author}")]
-        public IActionResult Get(string author)
-        {
-            // Query the database for jokes by the given author, case insensitively
-            List<Joke> result = library.GetByAuthor(author);
-
-            // If no jokes are found, return 404, else return list of jokes          
-            return (!result.Any()) ? NotFound("No jokes with Author: " + "\"" + author + "\"") : Ok(result);
-        }
     }
 }
