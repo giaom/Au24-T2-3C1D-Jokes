@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\Jokes.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\wwwroot\\Assets\\Background1.jpeg",
+      "PackagePath": "staticwebassets\\Assets\\Background1.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\wwwroot\\Assets\\Background2.jpeg",
+      "PackagePath": "staticwebassets\\Assets\\Background2.jpeg"
+    },
+    {
       "Id": "C:\\Users\\Aisha\\UWBclas\\UWB24Aut\\390 SpecialTopics\\JokesFold\\Au24-T2-3C1D-Jokes\\Jokes\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
