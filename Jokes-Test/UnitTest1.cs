@@ -85,6 +85,7 @@ namespace Jokes_Test
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
 
             AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
             _context = FillDatabase(_context);
 
             return new JokesController(_context);
@@ -134,6 +135,7 @@ namespace Jokes_Test
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
 
             AppDbContext _context = new(options);   // empty DB
+            _context.Database.EnsureDeleted();
 
             JokesController controller = new JokesController(_context);
 
@@ -179,7 +181,9 @@ namespace Jokes_Test
                         CreateJoke(testGUIDs[jokeIndex], testJokes[jokeIndex], testAuthors[jokeIndex]);
 
             AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
             _context.Add(expectedJoke);
+            _context.SaveChanges();
 
             JokesController controller = new JokesController(_context);
 
@@ -188,18 +192,19 @@ namespace Jokes_Test
             Joke.Joke actualJoke = queryResult.Value as Joke.Joke;
 
             // ASSERT
-            Assert.True(expectedJoke == actualJoke);
+            Assert.Equal(expectedJoke, actualJoke);
         }
 
         [Fact]
         // GetById Edge case
-        public void Jokes_GetById_ReturnNotFound_WhenEmpty()
+        public void Jokes_GetById_ReturnNotFound_EmptyDB()
         {
             // SET UP
             var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
 
             AppDbContext _context = new(options);   // empty DB
+            _context.Database.EnsureDeleted();
 
             JokesController controller = new JokesController(_context);
 
@@ -236,6 +241,7 @@ namespace Jokes_Test
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
 
             AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
             _context = FillDatabase(_context);  // fills database with jokes
 
             JokesController controller = new JokesController(_context);
@@ -248,6 +254,25 @@ namespace Jokes_Test
 
             // ASSERT
             Assert.True(_context.Jokes.FirstOrDefault(j => j.Id == jokeId) == null);
+        }
+
+        [Fact]
+        public void Jokes_Random_ReturnNotFound_EmptyDB()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);   // empty DB
+            _context.Database.EnsureDeleted();
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            IActionResult result = controller.RandomJoke();
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(result);
         }
     }
 
