@@ -99,7 +99,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        public void Jokes_GetById_Returns_Correct_Id()
+        public void Jokes_GetById_ReturnsCorrectJoke()
         {
             // SET UP
             JokesController controller = SetUpController();
@@ -117,9 +117,42 @@ namespace Jokes_Test
             // ASSERT
             Assert.True(expectedJokes.SequenceEqual(actualJokes, new JokeEqualityComparer()));
         }
+
+        [Fact]
+        public void Jokes_Remove_RemovesJoke()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context = FillDatabase(_context);
+
+            JokesController controller = new JokesController(_context);
+
+            List<Joke.Joke> expectedJokes = SetUpJokes();
+            List<Joke.Joke> actualJokes = new List<Joke.Joke>();
+
+            int jokeIndex = 0;
+            Guid jokeId = testGUIDs[jokeIndex];
+
+            // ACT
+            controller.DeleteJoke(jokeId);
+
+            // ASSERT
+            Assert.True(_context.Jokes.FirstOrDefault(j => j.Id == jokeId) == null);
+        }
     }
+
     public class JokeEqualityComparer : IEqualityComparer<Joke.Joke>
     {
+        /// <summary>
+        /// takes two Joke.Joke objects and compares the Id, Text, Author, and CreatedDate values
+        /// returns true if all are equal
+        /// </summary>
+        /// <param name="Joke.Joke x"></param>
+        /// <param name="Joke.Joke y"></param>
+        /// <returns>bool</returns>
         public bool Equals(Joke.Joke x, Joke.Joke y)
         {
             if (x == null || y == null) return false;
@@ -129,6 +162,13 @@ namespace Jokes_Test
                    x.CreatedDate == y.CreatedDate;
         }
 
+        /// <summary>
+        /// combines an input Joke.Joke's attributes into one int value
+        /// allows Joke.Joke objects with the same attribute values to have the 
+        /// same hashed value and will be considered equal 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>int</returns>
         public int GetHashCode(Joke.Joke obj)
         {
             return HashCode.Combine(obj.Id, obj.Text, obj.Author, obj.CreatedDate);
