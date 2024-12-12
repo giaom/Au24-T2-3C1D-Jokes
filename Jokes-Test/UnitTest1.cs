@@ -234,6 +234,7 @@ namespace Jokes_Test
         }
 
         [Fact]
+        // Remove Happy case
         public void Jokes_Remove_RemovesJoke()
         {
             // SET UP
@@ -257,6 +258,55 @@ namespace Jokes_Test
         }
 
         [Fact]
+        // Remove Edge case
+        public void Jokes_Remove_ReturnNotFound_RemoveTwice()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+            _context = FillDatabase(_context);  // fills database with jokes
+
+            JokesController controller = new JokesController(_context);
+
+            int jokeIndex = 0;
+            Guid jokeId = testGUIDs[jokeIndex]; // Guid of a joke in the database
+
+            // ACT
+            controller.DeleteJoke(jokeId);
+            IActionResult queryResult = controller.DeleteJoke(jokeId);
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // Remove Negative case
+        public void Jokes_Remove_ReturnNotFound_IncorrectGuid()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+            _context = FillDatabase(_context);  // fills database with jokes
+
+            JokesController controller = new JokesController(_context);
+
+            Guid nonExistentGuid = new Guid("8b56932f-0b35-49b3-a558-9844f7d3b4c8");
+
+            // ACT
+            IActionResult queryResult = controller.DeleteJoke(nonExistentGuid);
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // Random negative case
         public void Jokes_Random_ReturnNotFound_EmptyDB()
         {
             // SET UP
