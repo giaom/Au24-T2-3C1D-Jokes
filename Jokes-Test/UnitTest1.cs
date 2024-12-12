@@ -36,6 +36,14 @@ namespace Jokes_Test
             "Author 4"
         };
 
+        /// <summary>
+        /// creates and returns a new Joke.Joke based on the input id, text, and author
+        /// sets the CreatedDate as 2020, January 1st, 00:00:00
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="text"></param>
+        /// <param name="author"></param>
+        /// <returns> Joke.Joke </returns>
         private Joke.Joke CreateJoke(Guid id, string text, string author)
         {
             return new Joke.Joke
@@ -104,6 +112,39 @@ namespace Jokes_Test
         }
 
         [Fact]
+        // Index Happy case
+        public void Jokes_Index_ReturnsView()
+        {
+            // SET UP   
+            JokesController controller = SetUpController();
+
+            // ACT
+            IActionResult result = controller.Index();
+
+            // ASSERT
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        // Index Edge case
+        public void Jokes_Index_ReturnsView_WhenEmpty()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);   // empty DB
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            IActionResult result = controller.Index();
+
+            // ASSERT
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
         // GetById Happy case
         public void Jokes_GetById_ReturnJoke()
         {
@@ -158,7 +199,7 @@ namespace Jokes_Test
             var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
 
-            AppDbContext _context = new(options);
+            AppDbContext _context = new(options);   // empty DB
 
             JokesController controller = new JokesController(_context);
 
