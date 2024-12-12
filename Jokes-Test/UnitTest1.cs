@@ -110,12 +110,27 @@ namespace Jokes_Test
             // ACT
             for (int i = 0; i < NUMJOKES; i++)
             {
-                OkObjectResult actual = (OkObjectResult)controller.Get(testGUIDs[i]);
-                actualJokes.Add(actual.Value as Joke.Joke);
+                OkObjectResult queryResult = (OkObjectResult)controller.Get(testGUIDs[i]);
+                actualJokes.Add(queryResult.Value as Joke.Joke);
             }
 
             // ASSERT
             Assert.True(expectedJokes.SequenceEqual(actualJokes, new JokeEqualityComparer()));
+        }
+
+        [Fact]
+        public void Jokes_GetById_DoesNotReturnNonExistentJoke()
+        {
+            // SET UP
+            JokesController controller = SetUpController();
+
+            Guid nonExistentGuid = new Guid("8b56932f-0b35-49b3-a558-9844f7d3b4c8");
+
+            // ACT
+            IActionResult queryResult = controller.Get(nonExistentGuid);
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(queryResult);
         }
 
         [Fact]
