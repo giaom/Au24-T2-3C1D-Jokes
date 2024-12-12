@@ -126,15 +126,12 @@ namespace Jokes_Test
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
 
             AppDbContext _context = new(options);
-            _context = FillDatabase(_context);
+            _context = FillDatabase(_context);  // fills database with jokes
 
             JokesController controller = new JokesController(_context);
 
-            List<Joke.Joke> expectedJokes = SetUpJokes();
-            List<Joke.Joke> actualJokes = new List<Joke.Joke>();
-
             int jokeIndex = 0;
-            Guid jokeId = testGUIDs[jokeIndex];
+            Guid jokeId = testGUIDs[jokeIndex]; // Guid of a joke in the database
 
             // ACT
             controller.DeleteJoke(jokeId);

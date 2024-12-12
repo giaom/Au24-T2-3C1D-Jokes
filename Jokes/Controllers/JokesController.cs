@@ -30,7 +30,7 @@ namespace Joke.Controllers
         public IActionResult Get(Guid id)
         {
             var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
-            return joke == null ? NotFound() : new OkObjectResult(joke);
+            return joke == null ? NotFound($"No joke found with ID: {id}") : new OkObjectResult(joke);
         }
 
         [HttpPost]
