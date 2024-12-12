@@ -79,7 +79,7 @@ namespace Jokes_Test
         /// Sets up and returns a new jokesController with an AppDbContext
         /// </summary>
         /// <returns> JokesController </returns>
-        private JokesController SetUpController()
+        private JokesController SetUpController(Random random = null)
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
@@ -88,7 +88,9 @@ namespace Jokes_Test
             _context.Database.EnsureDeleted();
             _context = FillDatabase(_context);
 
-            return new JokesController(_context);
+            Random _random = random ?? new Random();
+
+            return new JokesController(_context, _random);
         }
 
         /// <summary>
@@ -306,7 +308,27 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Random negative case
+        // Random Happy case
+        public void Jokes_Random_ReturnSameJoke_SameSeed()
+        {
+            // SET UP
+            int seed = 1;
+            Random random = new Random(seed);
+            JokesController controller = SetUpController(random);
+
+            // ACT
+            OkObjectResult queryResult1 = (OkObjectResult)controller.RandomJoke();
+            OkObjectResult queryResult2 = (OkObjectResult)controller.RandomJoke();
+
+            Joke.Joke joke1 = queryResult1.Value as Joke.Joke;
+            Joke.Joke joke2 = queryResult2.Value as Joke.Joke;
+
+            // ASSERT
+            Assert.Equal(joke1, joke2);
+        }
+
+        [Fact]
+        // Random Negative case
         public void Jokes_Random_ReturnNotFound_EmptyDB()
         {
             // SET UP
