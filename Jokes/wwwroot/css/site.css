@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -19,4 +23,31 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+body.home-page {
+  background-image: url('/Assets/Background6.jpeg');
+  background-size: cover;
+  /* background-size: --- :
+  cover: Scales the image to cover the entire background area while maintaining its aspect ratio.
+  contain: Scales the image to fit within the background area while maintaining its aspect ratio.
+  Specific dimensions: You can specify exact dimensions like 100px 200px or percentages like 50% 50%. 
+  */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Custom spacing for the Home page 
+.display-4: Applied to the <h1> element to style the heading.
+.form-group: Applied to <div> elements that wrap form controls to ensure consistent spacing and alignment.
+*/
+.home-page .display-4 {
+  margin-bottom: 3rem;
+  /* Adjust the value as needed */
+}
+
+.home-page .form-group {
+  margin-bottom: 1rem;
+  /* Adjust the value as needed */
 }
