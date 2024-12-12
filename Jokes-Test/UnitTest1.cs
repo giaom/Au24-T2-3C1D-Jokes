@@ -5,6 +5,7 @@ using Joke.Data;
 using Joke.Controllers;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Newtonsoft.Json.Linq;
+using Moq;
 
 namespace Jokes_Test
 {
@@ -115,7 +116,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Index Happy case
+        // Index Happy case - index returns a view of the jokes
         public void Jokes_Index_ReturnsView()
         {
             // SET UP   
@@ -129,7 +130,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Index Edge case
+        // Index Edge case - index returns an empty view when database is empty
         public void Jokes_Index_ReturnsView_WhenEmpty()
         {
             // SET UP
@@ -149,7 +150,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Happy case
+        // GetById Happy case - get by the id stored in the database, return the joke 
         public void Jokes_GetById_ReturnJoke()
         {
             // SET UP
@@ -170,7 +171,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Edge case
+        // GetById Edge case - get by the id of the only stored joke, return that joke
         public void Jokes_GetById_ReturnJoke_DBStoresOneJoke()
         {
             // SET UP
@@ -198,7 +199,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Edge case
+        // GetById Edge case - getById in an empty database, return notfound
         public void Jokes_GetById_ReturnNotFound_EmptyDB()
         {
             // SET UP
@@ -220,7 +221,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Negative case
+        // GetById Negative case - get by an id not associated with a stored joke, return notfound
         public void Jokes_GetById_ReturnNotFound_IncorrectGuid()
         {
             // SET UP
@@ -236,7 +237,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Remove Happy case
+        // Remove Happy case - remove a joke, the joke will not be found in the database
         public void Jokes_Remove_RemovesJoke()
         {
             // SET UP
@@ -260,7 +261,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Remove Edge case
+        // Remove Edge case - remove a joke twice, return notfound
         public void Jokes_Remove_ReturnNotFound_RemoveTwice()
         {
             // SET UP
@@ -285,7 +286,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Remove Negative case
+        // Remove Negative case - remove id of joke that isn't stored, return notfound 
         public void Jokes_Remove_ReturnNotFound_IncorrectGuid()
         {
             // SET UP
@@ -308,7 +309,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Random Happy case
+        // Random Happy case - test with the same seed, always return the same joke
         public void Jokes_Random_ReturnSameJoke_SameSeed()
         {
             // SET UP
@@ -328,7 +329,38 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Random Negative case
+        // Random Happy case - database stores one joke, return that joke
+        public void Jokes_Random_ReturnSameJoke_DBStoresOneJoke()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            int jokeIndex = 0;
+
+            Joke.Joke expectedJoke =
+                        CreateJoke(testGUIDs[jokeIndex], testJokes[jokeIndex], testAuthors[jokeIndex]);
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+            _context.Add(expectedJoke);
+            _context.SaveChanges();
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            OkObjectResult queryResult1 = (OkObjectResult)controller.RandomJoke();
+            OkObjectResult queryResult2 = (OkObjectResult)controller.RandomJoke();
+
+            Joke.Joke joke1 = queryResult1.Value as Joke.Joke;
+            Joke.Joke joke2 = queryResult2.Value as Joke.Joke;
+
+            // ASSERT
+            Assert.Equal(joke1, joke2);
+        }
+
+        [Fact]
+        // Random Negative case - database doesn't store jokes
         public void Jokes_Random_ReturnNotFound_EmptyDB()
         {
             // SET UP
@@ -339,6 +371,23 @@ namespace Jokes_Test
             _context.Database.EnsureDeleted();
 
             JokesController controller = new JokesController(_context);
+
+            // ACT
+            IActionResult result = controller.RandomJoke();
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
+
+        [Fact]
+        // Random Negative case - out of bounds index to access Joke
+        public void Jokes_Random_ReturnNotFound_OutOfBoundsIndex()
+        {
+            // SET UP
+            var mockRandom = new Mock<Random>();
+            mockRandom.Setup(r => r.Next(It.IsAny<int>(), It.IsAny<int>())).Returns(NUMJOKES + 1);  // Set out-of-bounds index (greater than the list count)
+
+            JokesController controller = SetUpController(mockRandom.Object);
 
             // ACT
             IActionResult result = controller.RandomJoke();
