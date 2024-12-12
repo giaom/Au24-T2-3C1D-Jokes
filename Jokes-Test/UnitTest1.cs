@@ -36,6 +36,17 @@ namespace Jokes_Test
             "Author 4"
         };
 
+        private Joke.Joke CreateJoke(Guid id, string text, string author)
+        {
+            return new Joke.Joke
+            {
+                Id = id,
+                Text = text,
+                Author = author,
+                CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0)
+            };
+        }
+
         /// <summary>
         /// takes a APPDbContext object and fills it with a range of pre-generated jokes
         /// </summary>
@@ -48,13 +59,7 @@ namespace Jokes_Test
                 for (int i = 0; i < NUMJOKES; i++)
                 {
                     _context.Add(
-                        new Joke.Joke
-                        {
-                            Id = testGUIDs[i],
-                            Text = testJokes[i],
-                            Author = testAuthors[i],
-                            CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0)
-                        }
+                        CreateJoke(testGUIDs[i], testJokes[i], testAuthors[i])
                     );
                 }
                 _context.SaveChanges();
@@ -129,13 +134,8 @@ namespace Jokes_Test
 
             int jokeIndex = 0;
 
-            Joke.Joke expectedJoke = new Joke.Joke
-            {
-                Id = testGUIDs[jokeIndex],
-                Text = testJokes[jokeIndex],
-                Author = testAuthors[jokeIndex],
-                CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0)
-            };
+            Joke.Joke expectedJoke =
+                        CreateJoke(testGUIDs[jokeIndex], testJokes[jokeIndex], testAuthors[jokeIndex]);
 
             AppDbContext _context = new(options);
             _context.Add(expectedJoke);
