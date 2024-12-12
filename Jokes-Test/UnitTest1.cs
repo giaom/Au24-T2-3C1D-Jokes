@@ -99,6 +99,7 @@ namespace Jokes_Test
         }
 
         [Fact]
+        // GetById Happy case
         public void Jokes_GetById_ReturnsCorrectJoke()
         {
             // SET UP
@@ -119,6 +120,28 @@ namespace Jokes_Test
         }
 
         [Fact]
+        // GetById Edge case
+        public void Jokes_GetById_WhenEmpty()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+
+            JokesController controller = new JokesController(_context);
+
+            Guid nonExistentGuid = new Guid("a7b2570d-f2ca-4c08-8209-f1ce161e96e3");
+
+            // ACT
+            IActionResult queryResult = controller.Get(nonExistentGuid);
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // GetById Negative case
         public void Jokes_GetById_DoesNotReturnNonExistentJoke()
         {
             // SET UP
