@@ -1,8 +1,8 @@
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
-using Quotes;
+using Joke;
 
-namespace Quotes.Data
+namespace Joke.Data
 {
     public class AppDbContext : DbContext
     {
@@ -11,6 +11,7 @@ namespace Quotes.Data
         {
 
         }
+
         public DbSet<Joke> Jokes { get; set; }
     }
 

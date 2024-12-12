@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Quotes.Data;
+using Joke.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

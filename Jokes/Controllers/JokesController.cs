@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Quotes;
+using Joke;
 using System;
 using System.Linq;
-using Quotes.Data;
+using Joke.Data;
 using Jokes.Models;
 
-namespace Quotes.Controllers
+namespace Joke.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,20 +26,11 @@ namespace Quotes.Controllers
             return View(jokes);
         }
 
-
-        // [HttpGet]
-        // public IActionResult Get()
-        // {
-        //     // Return all the jokes in Jokes table 
-        //     var jokes = _context.Jokes.ToList();
-        //     return Ok(jokes);
-        // }
-
         [HttpGet("{id:guid}")]
         public IActionResult Get(Guid id)
         {
             var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
-            return joke == null ? NotFound() : Ok(joke);
+            return joke == null ? NotFound() : new OkObjectResult(joke);
         }
 
         [HttpPost]
@@ -77,7 +68,7 @@ namespace Quotes.Controllers
             _context.Jokes.Remove(joke);
             _context.SaveChanges();
 
-            return Ok($"Joke with ID {id} has been removed successfully.");
+            return new OkObjectResult($"Joke with ID {id} has been removed successfully.");
         }
 
         [HttpGet("random")]
@@ -108,9 +99,7 @@ namespace Quotes.Controllers
             }
 
             // Return the random joke
-            return Ok(randomJoke);
+            return new OkObjectResult(randomJoke);
         }
-
-
     }
 }
