@@ -121,6 +121,37 @@ namespace Jokes_Test
 
         [Fact]
         // GetById Edge case
+        public void Jokes_GetById_ReturnJoke_DBStoresOneJoke()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            int jokeIndex = 0;
+
+            Joke.Joke expectedJoke = new Joke.Joke
+            {
+                Id = testGUIDs[jokeIndex],
+                Text = testJokes[jokeIndex],
+                Author = testAuthors[jokeIndex],
+                CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0)
+            };
+
+            AppDbContext _context = new(options);
+            _context.Add(expectedJoke);
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            OkObjectResult queryResult = (OkObjectResult)controller.Get(testGUIDs[jokeIndex]);
+            Joke.Joke actualJoke = queryResult.Value as Joke.Joke;
+
+            // ASSERT
+            Assert.True(expectedJoke == actualJoke);
+        }
+
+        [Fact]
+        // GetById Edge case
         public void Jokes_GetById_ReturnNotFound_WhenEmpty()
         {
             // SET UP
