@@ -97,8 +97,10 @@ namespace Quotes.Controllers
             // Generate a random index between 0 and jokeCount - 1
             int randomIndex = random.Next(0, jokeCount);
 
+            List<Joke> jokes = _context.Jokes.ToList();
+
             // Get the random joke
-            var randomJoke = _context.Jokes.Skip(randomIndex).Take(1).FirstOrDefault();
+            var randomJoke = jokes[randomIndex];
 
             if (randomJoke == null)
             {
