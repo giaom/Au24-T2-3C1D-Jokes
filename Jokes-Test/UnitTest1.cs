@@ -100,7 +100,7 @@ namespace Jokes_Test
 
         [Fact]
         // GetById Happy case
-        public void Jokes_GetById_ReturnsCorrectJoke()
+        public void Jokes_GetById_ReturnJoke()
         {
             // SET UP
             JokesController controller = SetUpController();
@@ -121,7 +121,7 @@ namespace Jokes_Test
 
         [Fact]
         // GetById Edge case
-        public void Jokes_GetById_WhenEmpty()
+        public void Jokes_GetById_ReturnNotFound_WhenEmpty()
         {
             // SET UP
             var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -142,7 +142,7 @@ namespace Jokes_Test
 
         [Fact]
         // GetById Negative case
-        public void Jokes_GetById_DoesNotReturnNonExistentJoke()
+        public void Jokes_GetById_ReturnNotFound_IncorrectGuid()
         {
             // SET UP
             JokesController controller = SetUpController();
