@@ -150,7 +150,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Happy case - get by the id stored in the database, return the joke 
+        // GetById Happy case - get by the id stored in the database and return the joke 
         public void Jokes_GetById_ReturnJoke()
         {
             // SET UP
@@ -171,7 +171,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Edge case - get by the id of the only stored joke, return that joke
+        // GetById Edge case - get by the id of the only stored joke and return that joke
         public void Jokes_GetById_ReturnJoke_DBStoresOneJoke()
         {
             // SET UP
@@ -199,7 +199,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Edge case - getById in an empty database, return notfound
+        // GetById Edge case - getById in an empty database and return notfound
         public void Jokes_GetById_ReturnNotFound_EmptyDB()
         {
             // SET UP
@@ -221,7 +221,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetById Negative case - get by an id not associated with a stored joke, return notfound
+        // GetById Negative case - get by an id not associated with a stored joke and return notfound
         public void Jokes_GetById_ReturnNotFound_IncorrectGuid()
         {
             // SET UP
@@ -234,6 +234,122 @@ namespace Jokes_Test
 
             // ASSERT
             Assert.IsType<NotFoundObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // Post Happy case - checks that the correct status code is returned after a successful post
+        public void Jokes_Post_StatusCode201()
+        {
+            // SET UP
+            JokesController controller = SetUpController();
+
+            Joke.Joke toPost = CreateJoke(new Guid("d7d67bf4-ec2f-4c51-8e76-984810206c1b"),
+             "Added Joke", "Added Author");
+
+            // ACT
+            IActionResult queryResult = controller.Post(toPost);
+
+            // ASSERT
+            Assert.IsType<CreatedAtActionResult>(queryResult);
+        }
+
+        [Fact]
+        // Post Happy case - an empty library contains a joke after post
+        public void Jokes_Post_DBStoresNewJoke_EmptyDB()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+
+            int jokeIndex = 0;
+            Joke.Joke toPost = CreateJoke(testGUIDs[jokeIndex], testJokes[jokeIndex], testAuthors[jokeIndex]);
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            IActionResult queryResult = controller.Post(toPost);
+
+            // ASSERT
+            var storedJoke = _context.Jokes.FirstOrDefault(j => j.Id == toPost.Id);
+            Assert.True(storedJoke != null);
+        }
+
+        [Fact]
+        // Post Happy case - checks that a joke can be added using Post and return Joke.Joke
+        // when posting to an empty database
+        public void Jokes_Post_ReturnJoke_EmptyDB()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+
+            int jokeIndex = 0;
+            Joke.Joke expectedJoke = CreateJoke(testGUIDs[jokeIndex], testJokes[jokeIndex], testAuthors[jokeIndex]);
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            CreatedAtActionResult queryResult = (CreatedAtActionResult)controller.Post(expectedJoke);
+            Joke.Joke actualJoke = queryResult.Value as Joke.Joke;
+
+            // ASSERT
+            Assert.True(expectedJoke == actualJoke);
+        }
+
+
+        [Fact]
+        // Post Edge case - checks that a duplicate joke can not be stored
+        public void Jokes_Post_PostJoke_DBContainsDuplicate()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+
+            int jokeIndex = 0;
+            Joke.Joke expectedJoke = CreateJoke(testGUIDs[jokeIndex], testJokes[jokeIndex], testAuthors[jokeIndex]);
+
+            _context.Add(expectedJoke);
+            _context.SaveChanges();
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            IActionResult queryResult = controller.Post(expectedJoke);
+
+            // ASSERT
+            Assert.IsType<ConflictObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // Post Negative case - post a joke that is null
+        public void Jokes_Post_ReturnBadRequest_JokeIsNull()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);
+            _context.Database.EnsureDeleted();
+
+            Joke.Joke toPost = new Joke.Joke();
+            toPost = null;
+
+            JokesController controller = new JokesController(_context);
+
+            // ACT
+            IActionResult queryResult = controller.Post(toPost);
+
+            // ASSERT
+            Assert.IsType<BadRequestObjectResult>(queryResult);
         }
 
         [Fact]
@@ -261,7 +377,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Remove Edge case - remove a joke twice, return notfound
+        // Remove Edge case - remove a joke twice and return notfound
         public void Jokes_Remove_ReturnNotFound_RemoveTwice()
         {
             // SET UP
@@ -286,7 +402,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Remove Negative case - remove id of joke that isn't stored, return notfound 
+        // Remove Negative case - remove id of joke that isn't stored and return notfound 
         public void Jokes_Remove_ReturnNotFound_IncorrectGuid()
         {
             // SET UP
@@ -309,7 +425,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Random Happy case - test with the same seed, always return the same joke
+        // Random Happy case - test with the same seed and always return the same joke
         public void Jokes_Random_ReturnSameJoke_SameSeed()
         {
             // SET UP
@@ -329,7 +445,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // Random Happy case - database stores one joke, return that joke
+        // Random Happy case - database stores one joke and return that joke
         public void Jokes_Random_ReturnSameJoke_DBStoresOneJoke()
         {
             // SET UP

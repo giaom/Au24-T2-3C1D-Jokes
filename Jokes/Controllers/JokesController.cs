@@ -12,10 +12,11 @@ namespace Joke.Controllers
     public class JokesController : Controller
     {
         private readonly AppDbContext _context;
-
-        public JokesController(AppDbContext context)
+        private readonly Random _random;
+        public JokesController(AppDbContext context, Random random = null)
         {
             _context = context;
+            _random = random ?? new Random();
         }
 
         [HttpGet]
@@ -39,6 +40,11 @@ namespace Joke.Controllers
             if (joke == null)
             {
                 return BadRequest("Joke is required.");
+            }
+
+            if (_context.Jokes.Any(j => j.Id == joke.Id))
+            {
+                return Conflict("Joke is already stored");
             }
 
             //deifne joke object 
@@ -74,29 +80,23 @@ namespace Joke.Controllers
         [HttpGet("random")]
         public IActionResult RandomJoke()
         {
-            // Get the total count of jokes in the database
-            var jokeCount = _context.Jokes.Count();
+            List<Joke> jokes = _context.Jokes.ToList();
 
-            if (jokeCount == 0)
+            if (!jokes.Any())
             {
                 return NotFound("No jokes available.");
             }
 
-            // Create a random object
-            Random random = new Random();
-
             // Generate a random index between 0 and jokeCount - 1
-            int randomIndex = random.Next(0, jokeCount);
+            var randomIndex = _random.Next(0, _context.Jokes.Count());
 
-            List<Joke> jokes = _context.Jokes.ToList();
-
-            // Get the random joke
-            var randomJoke = jokes[randomIndex];
-
-            if (randomJoke == null)
+            if (randomIndex > jokes.Count())
             {
                 return NotFound("Joke not found.");
             }
+
+            // Get the random joke
+            var randomJoke = jokes[randomIndex];
 
             // Return the random joke
             return new OkObjectResult(randomJoke);
