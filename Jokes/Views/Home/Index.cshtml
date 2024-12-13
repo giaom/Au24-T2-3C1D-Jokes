@@ -11,16 +11,16 @@
 
 <body class="home-page">
     <div class="text-center">
-        <h1 class="display-4 mb-4">Welcome to the Home Page!</h1> <!-- Added mb-4 for margin-bottom -->
+        <h1 class="display-4 mb-4">Welcome to the Jokes!</h1>
 
         <form id="jokeForm">
             @Html.AntiForgeryToken()
-            <div class="form-group mb-4"> <!-- Added mb-4 for margin-bottom -->
+            <div class="form-group mb-4">
                 <label for="Text">Joke Text</label>
                 <input type="text" class="form-control" id="Text" name="Text" required />
             </div>
 
-            <div class="form-group mb-4"> <!-- Added mb-4 for margin-bottom -->
+            <div class="form-group mb-4">
                 <label for="Author">Author</label>
                 <input type="text" class="form-control" id="Author" name="Author" required />
             </div>
@@ -35,12 +35,9 @@
             </div>
         }
 
-        <!-- Displaying the jokes with delete option -->
         <div id="jokesList" class="mt-5">
-            <!-- Jokes will be appended here dynamically -->
         </div>
 
-        <!-- Find Joke by ID -->
         <div class="mt-5">
             <form id="findJokeForm">
                 <div class="form-group">
@@ -52,7 +49,6 @@
             </form>
 
             <div id="foundJoke" class="mt-3">
-                <!-- Found joke will be displayed here -->
             </div>
         </div>
     </div>
@@ -66,8 +62,77 @@
         <button type="submit" class="btn btn-danger">Remove Joke</button>
     </form>
 
+    <div class="mt-5">
+        <button id="randomJokeBtn" class="btn btn-success">Get Random Joke</button>
+        <div id="randomJoke" class="mt-3">
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <form id="authorJokeForm">
+            <div class="form-group">
+                <label for="author">Author Name</label>
+                <input type="text" class="form-control" id="author" name="author" placeholder="Enter author name"
+                    required />
+            </div>
+            <button type="submit" class="btn btn-warning">Get Jokes by Author</button>
+        </form>
+        <div id="authorJokesList" class="mt-3">
+
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+        $('#randomJokeBtn').click(function () {
+            $.ajax({
+                url: '/api/jokes/random',
+                type: 'GET',
+                success: function (response) {
+                    $('#randomJoke').html(`
+                        <div class="alert alert-info">
+                            <p><strong>${response.text}</strong></p>
+                            <p><em>BY: ${response.author}</em></p>
+                        </div>
+                    `);
+                },
+                error: function () {
+                    $('#randomJoke').html('<div class="alert alert-danger">Error fetching random joke.</div>');
+                }
+            });
+        });
+
+        $('#authorJokeForm').submit(function (e) {
+            e.preventDefault();
+
+            var author = $('#author').val();
+
+            if (!author) {
+                alert('Please enter an author name');
+                return;
+            }
+
+            $.ajax({
+                url: '/api/jokes/byauthor/' + author,
+                type: 'GET',
+                success: function (response) {
+                    $('#authorJokesList').empty();
+                    response.forEach(function (joke) {
+                        $('#authorJokesList').append(`
+                            <div class="alert alert-info">
+                                <p><strong>${joke.text}</strong></p>
+                                <p><em>BY: ${joke.author}</em></p>
+                            </div>
+                        `);
+                    });
+                },
+                error: function () {
+                    $('#authorJokesList').html('<div class="alert alert-danger">No jokes found for this author.</div>');
+                }
+            });
+        });
+
         // Function to fetch all jokes and display them
         function loadJokes() {
             $.ajax({
@@ -79,7 +144,7 @@
                         $('#jokesList').append(`
                             <div class="joke-item" data-id="${joke.id}">
                                 <p><strong>${joke.text}</strong></p>
-                                <p><em>by ${joke.author}</em></p>
+                                <p><em>BY: ${joke.author}</em></p>
                                 <button class="btn btn-danger delete-btn">Remove</button>
                             </div>
                         `);
@@ -91,9 +156,8 @@
             });
         }
 
-        // Submit the joke form (POST request to add a new joke)
         $('#jokeForm').submit(function (e) {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault();
 
             var jokeData = {
                 Text: $('#Text').val(),
@@ -101,17 +165,17 @@
             };
 
             $.ajax({
-                url: '/api/jokes',  // Correct URL to your API endpoint
+                url: '/api/jokes',
                 type: 'POST',
                 data: JSON.stringify(jokeData),
-                contentType: 'application/json', // Send data as JSON
+                contentType: 'application/json',
                 headers: {
-                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // For CSRF protection
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                 },
                 success: function (response) {
                     alert('Joke added successfully');
-                    loadJokes(); // Reload the jokes list after adding
-                    $('#jokeForm')[0].reset(); // Reset the form
+                    loadJokes();
+                    $('#jokeForm')[0].reset();
                 },
                 error: function () {
                     alert('Error adding joke');
@@ -119,16 +183,16 @@
             });
         });
 
-        // Delete a joke (remove it from the list and the database) when the "Remove" button is clicked
+
         $(document).on('click', '.delete-btn', function () {
             var jokeId = $(this).closest('.joke-item').data('id');
 
             $.ajax({
-                url: '/api/jokes/remove/' + jokeId,  // Delete endpoint with joke ID
+                url: '/api/jokes/remove/' + jokeId,
                 type: 'DELETE',
                 success: function () {
                     alert('Joke removed successfully');
-                    loadJokes(); // Reload the jokes list after removal
+                    loadJokes();
                 },
                 error: function () {
                     alert('Error removing joke');
@@ -136,11 +200,11 @@
             });
         });
 
-        // Handle the removal of a joke by ID entered in the form
+
         $('#removeJokeForm').submit(function (e) {
-            e.preventDefault(); // Prevent form submission
+            e.preventDefault();
 
-            var jokeId = $('#jokeIdToRemove').val(); // Get the entered joke ID
+            var jokeId = $('#jokeIdToRemove').val();
 
             if (!jokeId) {
                 alert('Please enter a joke ID');
@@ -148,11 +212,11 @@
             }
 
             $.ajax({
-                url: '/api/jokes/remove/' + jokeId,  // Delete endpoint with joke ID
+                url: '/api/jokes/remove/' + jokeId,
                 type: 'DELETE',
                 success: function () {
                     alert('Joke removed successfully');
-                    loadJokes(); // Reload the jokes list after removal
+                    loadJokes();
                 },
                 error: function () {
                     alert('Error removing joke');
@@ -160,11 +224,11 @@
             });
         });
 
-        // Handle the find joke by ID form submission
-        $('#findJokeForm').submit(function (e) {
-            e.preventDefault(); // Prevent form submission
 
-            var jokeId = $('#jokeIdToFind').val(); // Get the entered joke ID
+        $('#findJokeForm').submit(function (e) {
+            e.preventDefault();
+
+            var jokeId = $('#jokeIdToFind').val();
 
             if (!jokeId) {
                 alert('Please enter a joke ID');
@@ -172,13 +236,13 @@
             }
 
             $.ajax({
-                url: '/api/jokes/' + jokeId,  // Get joke by ID
+                url: '/api/jokes/' + jokeId,
                 type: 'GET',
                 success: function (response) {
                     $('#foundJoke').html(`
                         <div class="alert alert-info">
                             <p><strong>${response.text}</strong></p>
-                            <p><em>by ${response.author}</em></p>
+                            <p><em>BY: ${response.author}</em></p>
                         </div>
                     `);
                 },
@@ -188,9 +252,9 @@
             });
         });
 
-        // Initial load of jokes when the page is ready
+
         $(document).ready(function () {
-            loadJokes(); // Load jokes on page load
+            loadJokes();
         });
     </script>
 </body>
