@@ -1,0 +1,73 @@
+@model Quotes.Joke
+
+@{
+    ViewData["Title"] = "Get Random Joke";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+
+<body class="random-page">
+    <div class="text-center">
+        <h1 class="display-4 mb-4">Get Random Joke</h1>
+        <!-- <p>Select an option on the top left</p> -->
+
+        <div id="joke-container">
+            @if (Model != null)
+            {
+                <div class="joke">
+                    <br />
+                    <br />
+                    <br />
+                    <p><strong>"@Model.Text"</strong>
+                        <br><strong>Author:</strong> @Model.Author
+                        <!-- <br><strong>ID:</strong> @Model.Id -->
+                        <!-- <br><strong>Created:</strong> @Model.CreatedDate -->
+                    </p>
+                    <br />
+                </div>
+            }
+            else
+            {
+                <p>...</p>
+            }
+        </div>
+
+        <button id="random-joke-button" class="btn btn-primary">Pull random joke</button>
+    </div>
+
+    @section Scripts {
+        <script>
+            document.getElementById("random-joke-button").addEventListener("click", function () {
+                fetch('/api/jokes/random')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            const jokeContainer = document.getElementById("joke-container");
+                            jokeContainer.innerHTML = `
+                                    <div class="joke">
+                                        <br />
+                                        <br />
+                                        <p><strong>"${data.text}"</strong>
+                                            <br><strong>Author:</strong> ${data.author}
+                                            <!-- <br><strong>ID:</strong> ${data.id} -->
+                                            <!-- <br><strong>Created:</strong> ${data.createdDate} -->
+                                        </p>
+                                        <br />
+                                    </div>
+                                `;
+                        } else {
+                            alert('No jokes available.');
+                        }
+                    });
+            });
+        </script>
+    }
+</body>
+
+</html>

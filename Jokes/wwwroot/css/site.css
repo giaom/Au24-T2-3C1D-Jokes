@@ -38,6 +38,14 @@ body.home-page {
   background-position: center;
 }
 
+body.random-page {
+  background-image: url('/Assets/StandBG.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
 /* Custom spacing for the Home page 
 .display-4: Applied to the <h1> element to style the heading.
 .form-group: Applied to <div> elements that wrap form controls to ensure consistent spacing and alignment.

@@ -90,7 +90,7 @@ namespace Quotes.Controllers
 
             if (jokeCount == 0)
             {
-                return NotFound("No jokes available.");
+                return NotFound("Tough crowd... let\'s add some jokes.");
             }
 
             Random random = new Random();
@@ -122,6 +122,13 @@ namespace Quotes.Controllers
             }
 
             return Ok(jokes);
+        }
+
+        // Add this method to return the Random view
+        [HttpGet("/Random")]
+        public IActionResult Random()
+        {
+            return View();
         }
     }
 }
