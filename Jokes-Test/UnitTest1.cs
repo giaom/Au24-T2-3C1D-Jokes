@@ -511,6 +511,44 @@ namespace Jokes_Test
             // ASSERT
             Assert.IsType<NotFoundObjectResult>(result);
         }
+
+        [Fact]
+        // GetByAuthor Happy case - gets joke by author and returns an OkObjectResult
+        public void Jokes_GetByAuthor_ReturnJoke()
+        {
+            // SET UP
+            JokesController controller = SetUpController();
+
+            int jokeIndex = 0;
+
+            // ACT
+            IActionResult queryResult = controller.GetJokesByAuthor(testAuthors[jokeIndex]);
+
+            // ASSERT
+            Assert.IsType<OkObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // GetByAuthor Negative case - gets joke from an empty DB returns NotFound
+        public void Jokes_GetByAuthor_ReturnNotFound_EmptyDB()
+        {
+            // SET UP
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestJokesDb").Options;
+
+            AppDbContext _context = new(options);   // empty DB
+            _context.Database.EnsureDeleted();
+
+            JokesController controller = new JokesController(_context);
+
+            string nonExistentAuthor = "Non-Existent Author";
+
+            // ACT
+            IActionResult queryResult = controller.GetJokesByAuthor(nonExistentAuthor);
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(queryResult);
+        }
     }
 
     public class JokeEqualityComparer : IEqualityComparer<Joke.Joke>

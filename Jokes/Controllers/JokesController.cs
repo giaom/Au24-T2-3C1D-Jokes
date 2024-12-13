@@ -18,7 +18,7 @@ namespace Joke.Controllers
             _context = context;
             _random = random ?? new Random();
         }
-        
+
         /// Description: Get all jokes
         /// Get: /api/jokes
         /// Returns: List<Joke>
@@ -66,7 +66,7 @@ namespace Joke.Controllers
 
             return CreatedAtAction(nameof(Get), new { id = joke.Id }, joke);
         }
-  
+
         /// Description: Delete a joke  
         /// Delete: /api/jokes/remove/{id:guid}
         /// Parameter: id type Guid
@@ -122,14 +122,14 @@ namespace Joke.Controllers
         [HttpGet("byauthor/{author:}")]
         public IActionResult GetJokesByAuthor(string author)
         {
-            var jokes = _context.Jokes.Where(j => j.Author == author).ToList();
+            List<Joke> jokes = _context.Jokes.Where(j => j.Author == author).ToList();
 
-            if (jokes == null)
+            if (!jokes.Any())
             {
                 return NotFound($"No joke found with author: {author}");
             }
 
-            return Ok(jokes);
+            return new OkObjectResult(jokes);
         }
     }
 }
