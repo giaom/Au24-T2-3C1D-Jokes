@@ -1,4 +1,4 @@
-@model Quotes.Joke
+@model Joke.Joke
 
 @{
     ViewData["Title"] = "Get Random Joke";
@@ -50,17 +50,17 @@
                         if (data) {
                             const jokeContainer = document.getElementById("joke-container");
                             jokeContainer.innerHTML = `
-                                    <div class="joke">
-                                        <br />
-                                        <br />
-                                        <p><strong>"${data.text}"</strong>
-                                            <br><strong>Author:</strong> ${data.author}
-                                            <!-- <br><strong>ID:</strong> ${data.id} -->
-                                            <!-- <br><strong>Created:</strong> ${data.createdDate} -->
-                                        </p>
-                                        <br />
-                                    </div>
-                                `;
+                                            <div class="joke">
+                                                <br />
+                                                <br />
+                                                <p><strong>"${data.text}"</strong>
+                                                    <br><strong>Author:</strong> ${data.author}
+                                                    <!-- <br><strong>ID:</strong> ${data.id} -->
+                                                    <!-- <br><strong>Created:</strong> ${data.createdDate} -->
+                                                </p>
+                                                <br />
+                                            </div>
+                                        `;
                         } else {
                             alert('No jokes available.');
                         }
