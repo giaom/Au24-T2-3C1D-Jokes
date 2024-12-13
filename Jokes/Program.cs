@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Joke.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("JokesDatabase")

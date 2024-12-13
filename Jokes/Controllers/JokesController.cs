@@ -18,22 +18,32 @@ namespace Joke.Controllers
             _context = context;
             _random = random ?? new Random();
         }
-
+        
+        /// Description: Get all jokes
+        /// Get: /api/jokes
+        /// Returns: List<Joke>
         [HttpGet]
         public IActionResult Index()
         {
-            // Return all the jokes in Jokes table 
             var jokes = _context.Jokes.ToList();
             return View(jokes);
         }
 
-        [HttpGet("{id:guid}")]
+        /// Description: Get a joke by ID
+        /// Get: /api/jokes/{id:guid}
+        /// Parameter: id type Guid
+        /// Returns: Joke
+        [HttpGet("/{id:guid}")]
         public IActionResult Get(Guid id)
         {
             var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
             return joke == null ? NotFound($"No joke found with ID: {id}") : new OkObjectResult(joke);
         }
 
+        /// Description: Create a new joke
+        /// Post: /api/jokes
+        /// Parameter: joke type Joke
+        /// Returns: Joke
         [HttpPost]
         public IActionResult Post([FromBody] Joke joke)
         {
@@ -47,36 +57,39 @@ namespace Joke.Controllers
                 return Conflict("Joke is already stored");
             }
 
-            //deifne joke object 
+            // define joke object 
             joke.Id = Guid.NewGuid();
             joke.CreatedDate = DateTime.Now;
 
-            // Add joke object 
             _context.Jokes.Add(joke);
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(Get), new { id = joke.Id }, joke);
         }
-
+  
+        /// Description: Delete a joke  
+        /// Delete: /api/jokes/remove/{id:guid}
+        /// Parameter: id type Guid
+        /// Returns: string
         [HttpDelete("remove/{id:guid}")]
         public IActionResult DeleteJoke(Guid id)
         {
-            // Try to find the joke
             var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
 
-            // Check if joke is null
             if (joke == null)
             {
                 return NotFound($"No joke found with ID: {id}");
             }
 
-            // Remove the joke (now safely, because we know it's not null)
             _context.Jokes.Remove(joke);
             _context.SaveChanges();
 
             return new OkObjectResult($"Joke with ID {id} has been removed successfully.");
         }
 
+        /// Description: Get a random joke
+        /// Get: /api/jokes/random    
+        /// Returns: Joke
         [HttpGet("random")]
         public IActionResult RandomJoke()
         {
@@ -92,7 +105,7 @@ namespace Joke.Controllers
 
             if (randomIndex > jokes.Count())
             {
-                return NotFound("Joke not found.");
+                return NotFound("Out of range index.");
             }
 
             // Get the random joke
@@ -100,6 +113,23 @@ namespace Joke.Controllers
 
             // Return the random joke
             return new OkObjectResult(randomJoke);
+        }
+
+        /// Description: Get jokes by author
+        /// Get: /api/jokes/byauthor/{author}
+        /// Parameter: author type string
+        /// Returns: List<Joke>
+        [HttpGet("byauthor/{author:}")]
+        public IActionResult GetJokesByAuthor(string author)
+        {
+            var jokes = _context.Jokes.Where(j => j.Author == author).ToList();
+
+            if (jokes == null)
+            {
+                return NotFound($"No joke found with author: {author}");
+            }
+
+            return Ok(jokes);
         }
     }
 }

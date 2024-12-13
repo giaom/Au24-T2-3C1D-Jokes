@@ -6,7 +6,6 @@ namespace Joke.Data
 {
     public class AppDbContext : DbContext
     {
-        // Constructor that passes options to the base DbContext class
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
