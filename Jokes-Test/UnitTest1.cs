@@ -529,7 +529,7 @@ namespace Jokes_Test
         }
 
         [Fact]
-        // GetByAuthor Happy case - gets joke by author and returns an OkObjectResult
+        // GetByAuthor Happy case - gets joke by author and returns a List<Joke.Joke>
         public void Jokes_GetByAuthor_ReturnJoke()
         {
             // SET UP
@@ -560,6 +560,22 @@ namespace Jokes_Test
             _context.Database.EnsureDeleted();
 
             JokesController controller = new JokesController(_context);
+
+            string nonExistentAuthor = "Non-Existent Author";
+
+            // ACT
+            IActionResult queryResult = controller.GetJokesByAuthor(nonExistentAuthor);
+
+            // ASSERT
+            Assert.IsType<NotFoundObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // GetByAuthor Negative case - query using author that is not stored
+        public void Jokes_GetByAuthor_ReturnNotFound()
+        {
+            // SET UP
+            JokesController controller = SetUpController();
 
             string nonExistentAuthor = "Non-Existent Author";
 
