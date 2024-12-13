@@ -514,7 +514,7 @@ namespace Jokes_Test
 
         [Fact]
         // GetByAuthor Happy case - gets joke by author and returns an OkObjectResult
-        public void Jokes_GetByAuthor_ReturnJoke()
+        public void Jokes_GetByAuthor_ReturnOkObjectResult()
         {
             // SET UP
             JokesController controller = SetUpController();
@@ -526,6 +526,26 @@ namespace Jokes_Test
 
             // ASSERT
             Assert.IsType<OkObjectResult>(queryResult);
+        }
+
+        [Fact]
+        // GetByAuthor Happy case - gets joke by author and returns an OkObjectResult
+        public void Jokes_GetByAuthor_ReturnJoke()
+        {
+            // SET UP
+            JokesController controller = SetUpController();
+
+            int jokeIndex = 0;
+
+            List<Joke.Joke> expectedJokes = new List<Joke.Joke>();
+            expectedJokes.Add(CreateJoke(testGUIDs[0], testJokes[0], testAuthors[0]));
+
+            // ACT
+            OkObjectResult queryResult = (OkObjectResult)controller.GetJokesByAuthor(testAuthors[jokeIndex]);
+            List<Joke.Joke> actualJokes = queryResult.Value as List<Joke.Joke>;
+
+            // ASSERT
+            Assert.True(expectedJokes.SequenceEqual(actualJokes, new JokeEqualityComparer()));
         }
 
         [Fact]
