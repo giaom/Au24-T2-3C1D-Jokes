@@ -1,21 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
-using Quotes;
+using Joke;
 using System;
 using System.Linq;
-using Quotes.Data;
+using Joke.Data;
 using Jokes.Models;
 
-namespace Quotes.Controllers
+namespace Joke.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class JokesController : Controller
     {
         private readonly AppDbContext _context;
-
-        public JokesController(AppDbContext context)
+        private readonly Random _random;
+        public JokesController(AppDbContext context, Random random = null)
         {
             _context = context;
+            _random = random ?? new Random();
         }
         
         /// Description: Get all jokes
@@ -36,7 +37,7 @@ namespace Quotes.Controllers
         public IActionResult Get(Guid id)
         {
             var joke = _context.Jokes.FirstOrDefault(j => j.Id == id);
-            return joke == null ? NotFound() : Ok(joke);
+            return joke == null ? NotFound($"No joke found with ID: {id}") : new OkObjectResult(joke);
         }
 
         /// Description: Create a new joke
@@ -51,6 +52,12 @@ namespace Quotes.Controllers
                 return BadRequest("Joke is required.");
             }
 
+            if (_context.Jokes.Any(j => j.Id == joke.Id))
+            {
+                return Conflict("Joke is already stored");
+            }
+
+            // define joke object 
             joke.Id = Guid.NewGuid();
             joke.CreatedDate = DateTime.Now;
 
@@ -77,7 +84,7 @@ namespace Quotes.Controllers
             _context.Jokes.Remove(joke);
             _context.SaveChanges();
 
-            return Ok($"Joke with ID {id} has been removed successfully.");
+            return new OkObjectResult($"Joke with ID {id} has been removed successfully.");
         }
 
         /// Description: Get a random joke
@@ -86,25 +93,26 @@ namespace Quotes.Controllers
         [HttpGet("random")]
         public IActionResult RandomJoke()
         {
-            var jokeCount = _context.Jokes.Count();
+            List<Joke> jokes = _context.Jokes.ToList();
 
-            if (jokeCount == 0)
+            if (!jokes.Any())
             {
                 return NotFound("No jokes available.");
             }
 
-            Random random = new Random();
-            int randomIndex = random.Next(0, jokeCount);
-            
-            List<Joke> jokes = _context.Jokes.ToList();
-            var randomJoke = jokes[randomIndex];
+            // Generate a random index between 0 and jokeCount - 1
+            var randomIndex = _random.Next(0, _context.Jokes.Count());
 
-            if (randomJoke == null)
+            if (randomIndex > jokes.Count())
             {
-                return NotFound("Joke not found.");
+                return NotFound("Out of range index.");
             }
 
-            return Ok(randomJoke);
+            // Get the random joke
+            var randomJoke = jokes[randomIndex];
+
+            // Return the random joke
+            return new OkObjectResult(randomJoke);
         }
 
         /// Description: Get jokes by author
