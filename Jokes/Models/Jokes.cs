@@ -2,8 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-
-namespace Quotes
+namespace Joke
 {
     public class Joke
     {
@@ -12,7 +11,5 @@ namespace Quotes
         public string Author { get; set; }
         public DateTime CreatedDate { get; set; }
     }
-
-
 }
 
